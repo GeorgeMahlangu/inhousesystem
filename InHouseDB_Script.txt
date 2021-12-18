@@ -1,0 +1,212 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema InHouseDB
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema InHouseDB
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `InHouseDB` DEFAULT CHARACTER SET utf8 ;
+USE `InHouseDB` ;
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`student` (
+  `studentNum` VARCHAR(9) NOT NULL,
+  `firstname` VARCHAR(15) NOT NULL,
+  `lastname` VARCHAR(15) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `condition` VARCHAR(15) NOT NULL,
+  `reason` VARCHAR(400) NOT NULL,
+  `numberOfModulesRegistered` INT(2) NULL,
+  `highSchool` VARCHAR(45) NOT NULL,
+  `Province` VARCHAR(45) NOT NULL,
+  `town` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`studentNum`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`course`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`course` (
+  `courseCode` VARCHAR(10) NOT NULL,
+  `courseName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`courseCode`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`admin`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`admin` (
+  `staffNum` VARCHAR(10) NOT NULL,
+  `firstname` VARCHAR(15) NOT NULL,
+  `lastname` VARCHAR(15) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `cellphone` VARCHAR(15) NOT NULL,
+  `address` VARCHAR(45) NOT NULL,
+  `city` VARCHAR(30) NOT NULL,
+  `campus` VARCHAR(30) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`staffNum`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`subj_head`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`subj_head` (
+  `staffNumber(subjectHead)` VARCHAR(10) NOT NULL,
+  `firstname` VARCHAR(15) NOT NULL,
+  `lastname` VARCHAR(15) NOT NULL,
+  `staffNum` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`staffNumber(subjectHead)`, `staffNum`),
+  INDEX `fk_subj_head_admin1_idx` (`staffNum` ASC),
+  CONSTRAINT `fk_subj_head_admin1`
+    FOREIGN KEY (`staffNum`)
+    REFERENCES `InHouseDB`.`admin` (`staffNum`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`module`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`module` (
+  `subjectCode` VARCHAR(15) NOT NULL,
+  `courseCode` VARCHAR(10) NOT NULL,
+  `staffNumber(subjectHead)` VARCHAR(10) NOT NULL,
+  `subjectName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`subjectCode`, `courseCode`, `staffNumber(subjectHead)`),
+  INDEX `fk_module_course1_idx` (`courseCode` ASC),
+  INDEX `fk_module_subj_head1_idx` (`staffNumber(subjectHead)` ASC),
+  CONSTRAINT `fk_module_course1`
+    FOREIGN KEY (`courseCode`)
+    REFERENCES `InHouseDB`.`course` (`courseCode`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_module_subj_head1`
+    FOREIGN KEY (`staffNumber(subjectHead)`)
+    REFERENCES `InHouseDB`.`subj_head` (`staffNumber(subjectHead)`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`student_has_module`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`student_has_module` (
+  `studentNum` VARCHAR(9) NOT NULL,
+  `subjectCode` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`studentNum`, `subjectCode`),
+  INDEX `fk_module_has_student_student1_idx` (`studentNum` ASC),
+  INDEX `fk_module_has_student_module_idx` (`subjectCode` ASC),
+  CONSTRAINT `fk_module_has_student_module`
+    FOREIGN KEY (`subjectCode`)
+    REFERENCES `InHouseDB`.`module` (`subjectCode`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_module_has_student_student1`
+    FOREIGN KEY (`studentNum`)
+    REFERENCES `InHouseDB`.`student` (`studentNum`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`tutor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`tutor` (
+  `studentNum` VARCHAR(10) NOT NULL,
+  `firtname` VARCHAR(15) NOT NULL,
+  `lastname` VARCHAR(15) NOT NULL,
+  `noAssignedModules` INT(2) NOT NULL,
+  `campus` VARCHAR(30) NOT NULL,
+  `cellphone` VARCHAR(15) NOT NULL,
+  `department` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `active` CHAR(1) NOT NULL,
+  PRIMARY KEY (`studentNum`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`admin_has_student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`admin_has_student` (
+  `staffNum` VARCHAR(10) NOT NULL,
+  `studentNum` VARCHAR(9) NOT NULL,
+  PRIMARY KEY (`staffNum`, `studentNum`),
+  INDEX `fk_admin_has_student_student1_idx` (`studentNum` ASC),
+  INDEX `fk_admin_has_student_admin1_idx` (`staffNum` ASC),
+  CONSTRAINT `fk_admin_has_student_admin1`
+    FOREIGN KEY (`staffNum`)
+    REFERENCES `InHouseDB`.`admin` (`staffNum`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_admin_has_student_student1`
+    FOREIGN KEY (`studentNum`)
+    REFERENCES `InHouseDB`.`student` (`studentNum`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`admin_has_tutor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`admin_has_tutor` (
+  `staffNum` VARCHAR(10) NOT NULL,
+  `studentNum` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`staffNum`, `studentNum`),
+  INDEX `fk_admin_has_tutor_tutor1_idx` (`studentNum` ASC),
+  INDEX `fk_admin_has_tutor_admin1_idx` (`staffNum` ASC),
+  CONSTRAINT `fk_admin_has_tutor_admin1`
+    FOREIGN KEY (`staffNum`)
+    REFERENCES `InHouseDB`.`admin` (`staffNum`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_admin_has_tutor_tutor1`
+    FOREIGN KEY (`studentNum`)
+    REFERENCES `InHouseDB`.`tutor` (`studentNum`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `InHouseDB`.`tutor_has_student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `InHouseDB`.`tutor_has_student` (
+  `student_studentNum` VARCHAR(9) NOT NULL,
+  `tutor_studentNum` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`student_studentNum`, `tutor_studentNum`),
+  INDEX `fk_student_has_tutor_tutor1_idx` (`tutor_studentNum` ASC),
+  INDEX `fk_student_has_tutor_student1_idx` (`student_studentNum` ASC),
+  CONSTRAINT `fk_student_has_tutor_student1`
+    FOREIGN KEY (`student_studentNum`)
+    REFERENCES `InHouseDB`.`student` (`studentNum`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_student_has_tutor_tutor1`
+    FOREIGN KEY (`tutor_studentNum`)
+    REFERENCES `InHouseDB`.`tutor` (`studentNum`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
