@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 
 <?php include 'includes/header.php'?>
 
@@ -90,7 +90,7 @@
     </section>
     <section id="portfolio" class="p-0"></section>
     <section class="text-white bg-dark" style="background: var(--blue) !important;">
-        <div class="container text-center"><img style="text-align: right;width: 300px;height: 300px;border-style: none;border-radius: 160px;" src="assets/img/mole_jessyj_243765491_585889889512041_7775767134637620172_n.png">
+        <div class="container text-center"><img style="text-align: right;width: 300px;height: 300px;border-style: none;border-radius: 160px;" src="assets/img/mole_jessyj_243765491_585889889512041_7775767134637620172_n.png" alt="">
             <h2 class="mb-4">Meet the ICT Academic Excellence Officer</h2>
             <p style="text-align: center;">Brief bio</p><a class="btn btn-light btn-xl sr-button" role="button" data-aos="zoom-in" data-aos-duration="400" data-aos-once="true" href="#">Contact Me Now</a>
         </div>

@@ -69,73 +69,46 @@ include 'includes/session.php';
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>Full Name</th>
                                             <th>Student No.</th>
                                             <th>Campus</th>
                                             <th>No. Modules Assigned</th>
                                             <th>Total Sessions conducted</th>
                                             <th>Cellphone</th>
+                                            <th>Tools</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30"
-                                                    src="assets/img/avatars/avatar3.jpeg">George Mahlangu</td>
-                                            <td>215266397</td>
-                                            <td>Soshanguve</td>
-                                            <td>2</td>
-                                            <td>26</td>
-                                            <td>0823207253</td>
+                                        <?php
+                                        $conn = $pdo->open();
+
+                                        try {
+                                            $stmt = $conn->prepare("SELECT * FROM tutor");
+                                            $stmt->execute();
+                                            foreach ($stmt as $row) {
+
+                                                echo "
+                                            <tr>
+                                            <td><img class='rounded-circle mr-2' width='30' height='30' src='assets/img/avatars/avatar1.jpeg'>" . $row['firstname'] . " " . $row['lastname'] . "</td>
+                                            <td>" . $row['studentNum'] . "</td>
+                                            <td>" . $row['campus'] . "</td>
+                                            <td> 0 </td>
+                                            <td> 0 </td>
+                                            <td>" . $row['cellphone'] . "</td>
+                                            <td>
+                                                <a href='edit-tutor.php?studentNum=" . $row['studentNum'] . "'><button class='btn btn-success btn-sm edit btn-flat'><i class='fa fa-edit' ></i> Edit</button></a>
+                                                <button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['studentNum'] . "'><i class='fa fa-trash'></i> Delete</button>
+                             
+                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30"
-                                                    src="assets/img/avatars/avatar2.jpeg">Mzobanzi Majola</td>
-                                            <td>218573819</td>
-                                            <td>Soshanguve</td>
-                                            <td>3</td>
-                                            <td>32</td>
-                                            <td>0633892472</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30"
-                                                    src="assets/img/avatars/avatar3.jpeg">Mpho Thobejane</td>
-                                            <td>214789300</td>
-                                            <td>Emalahleni</td>
-                                            <td>3</td>
-                                            <td>27<br></td>
-                                            <td>0829956321</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30"
-                                                    src="assets/img/avatars/avatar4.jpeg">Mandisa Hlophe</td>
-                                            <td>216153000</td>
-                                            <td>Polokwane</td>
-                                            <td>2</td>
-                                            <td>16<br></td>
-                                            <td>0839658820</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30"
-                                                    src="assets/img/avatars/avatar5.jpeg">Fabrice Khonde</td>
-                                            <td>213548662</td>
-                                            <td>Soshanguve</td>
-                                            <td>3</td>
-                                            <td>25<br></td>
-                                            <td>0724869000</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30"
-                                                    src="assets/img/avatars/avatar1.jpeg">Sebenzile Maluleke</td>
-                                            <td>216235541</td>
-                                            <td>Polokwane</td>
-                                            <td>2</td>
-                                            <td>15</td>
-                                            <td>0829912366</td>
-                                        </tr>
-                                        <tr></tr>
-                                        <tr></tr>
-                                        <tr></tr>
-                                        <tr></tr>
+                                            ";
+                                            }
+                                        } catch (PDOException $e) {
+                                            echo $e->getMessage();
+                                        }
+
+                                        $pdo->close();
+                                        ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -145,6 +118,7 @@ include 'includes/session.php';
                                             <td><strong>No. Modules Assigned</strong></td>
                                             <td><strong>Total Sessions conducted</strong></td>
                                             <td><strong>Cellphone</strong></td>
+                                            <td><strong>Tools</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
