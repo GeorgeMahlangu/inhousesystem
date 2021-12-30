@@ -55,7 +55,7 @@ $pdo->close();
                                             <p class="text-primary m-0 font-weight-bold"></p>
                                         </div>
                                         <div class="card-body">
-                                            <form action="register-tutor.php" method="POST">
+                                            <form action="update-tutor.php" method="POST">
                                                 <div class="form-row">
                                                     <div class="col">
                                                         <div class="form-group"><label for="username"><strong>First
@@ -75,9 +75,9 @@ $pdo->close();
                                                 <div class="form-row">
                                                     <div class="col">
                                                         <div class="form-group"><label for="username"><strong>Student
-                                                                    Number</strong><br></label><input required=""
-                                                                class="form-control" type="text" id="username"
-                                                                placeholder="Student Number"
+                                                                    Number</strong><br></label><input readonly
+                                                                required="" class="form-control" type="text"
+                                                                id="username" placeholder="Student Number"
                                                                 value='<?php echo $student['studentNum']; ?>'
                                                                 name="student-number">
                                                         </div>
@@ -157,14 +157,25 @@ $pdo->close();
                                                     <div class="col">
                                                         <div class="form-group"><label
                                                                 for="first_name"><strong>Active</strong><br></label><select
-                                                                value='<?php echo $student['active']; ?>'
+                                                                id="active" value='<?php echo $student['active']; ?>'
                                                                 class="form-control" name="active">
                                                                 <option value="1" selected="">Active</option>
                                                                 <option value="0">Inactive</option>
                                                             </select></div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><button name="register"
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                        <div class="form-group"><label for="first_name"><strong>Is Core
+                                                                    Team Member</strong><br></label><select
+                                                                id="isCoreTeamMember" class="form-control"
+                                                                name="isCoreTeamMember">
+                                                                <option value="1" selected="">Yes</option>
+                                                                <option value="0">No</option>
+                                                            </select></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"><button name="edit"
                                                         class="btn btn-success btn-sm edit btn-flat" type="submit">Save
                                                         Tutor</button>
                                                 </div>
@@ -227,6 +238,8 @@ $pdo->close();
     //Set default selected values from the Databases
     $('#campus option[value="<?php echo $student['campus']; ?>"]').attr('selected', 'selected');
     $('#department option[value="<?php echo $student['department']; ?>"]').attr('selected', 'selected');
+    $('#active option[value="<?php echo $student['active']; ?>"]').attr('selected', 'selected');
+    $('#isCoreTeamMember option[value="<?php echo $student['isCoreTeamMember']; ?>"]').attr('selected', 'selected');
     </script>
 </body>
 

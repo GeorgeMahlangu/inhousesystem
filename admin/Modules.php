@@ -27,7 +27,7 @@ include 'includes/session.php';
                 <div class="container-fluid">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0">Modules</h3><a
-                            class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"
+                            class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="add-module.php"
                             style="background: #023e8a;"><i class="fas fa-folder-plus fa-sm text-white-50"></i>&nbsp;Add
                             Modules</a>
                     </div>
@@ -45,7 +45,8 @@ include 'includes/session.php';
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
                                                 <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
+                                            </select>&nbsp;</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input

@@ -38,8 +38,15 @@ include 'includes/session.php';
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
                                             <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
-                                                <span>sTUDENTS</span></div>
-                                            <div class="text-dark font-weight-bold h5 mb-0"><span>28</span></div>
+                                                <span>sTUDENTS</span>
+                                            </div>
+                                            <?php
+                                            $stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM student");
+                                            $stmt->execute();
+                                            $urow =  $stmt->fetch();
+
+                                            echo "<div class='text-dark font-weight-bold h5 mb-0'><span>" . $urow['numrows'] . "</span></div>";
+                                            ?>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-user-friends fa-2x text-gray-300"></i>
                                         </div>
@@ -53,8 +60,15 @@ include 'includes/session.php';
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
                                             <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
-                                                <span>tuTORS</span></div>
-                                            <div class="text-dark font-weight-bold h5 mb-0"><span>15</span></div>
+                                                <span>TUTORS</span>
+                                            </div>
+                                            <?php
+                                            $stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM tutor");
+                                            $stmt->execute();
+                                            $urow =  $stmt->fetch();
+
+                                            echo "<div class='text-dark font-weight-bold h5 mb-0'><span>" . $urow['numrows'] . "</span></div>";
+                                            ?>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-user-tie fa-2x text-gray-300"></i></div>
                                     </div>
@@ -67,7 +81,8 @@ include 'includes/session.php';
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
                                             <div class="text-uppercase text-info font-weight-bold text-xs mb-1">
-                                                <span>lECTURES</span></div>
+                                                <span>lECTURES</span>
+                                            </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
                                                     <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>50</span>
@@ -87,7 +102,8 @@ include 'includes/session.php';
                                     <div class="row align-items-center no-gutters">
                                         <div class="col mr-2">
                                             <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
-                                                <span>modules Supported</span></div>
+                                                <span>modules Supported</span>
+                                            </div>
                                             <div class="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
