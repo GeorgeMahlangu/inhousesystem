@@ -1,5 +1,15 @@
 <?php
 include 'includes/session.php';
+
+$conn = $pdo->open();
+
+$studentNum = $_GET['studentNum'];
+$stmt = $conn->prepare("SELECT * FROM student WHERE studentNum=:student");
+$stmt->execute(['student' => $studentNum]);
+$student = $stmt->fetch();
+
+$pdo->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -33,26 +43,42 @@ include 'includes/session.php';
                                     <h4 class="text-dark mb-4" style="text-align: left;">Register a Student</h4>
                                 </div>
                                 <form class="user">
+                                    <?php
+                                    if (isset($_SESSION['error'])) {
+                                        echo "<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><span>" . $_SESSION['error'] . "</span></div>";
+                                        unset($_SESSION['error']);
+                                    }
+                                    if (isset($_SESSION['success'])) {
+                                        echo "<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><span>" . $_SESSION['success'] . "</span></div>";
+                                        unset($_SESSION['success']);
+                                    }
+                                    ?>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user"
                                                 type="text" id="exampleFirstName-1" placeholder="First Name"
                                                 name="first_name"></div>
                                         <div class="col-sm-6"><input class="form-control form-control-user" type="text"
-                                                id="exampleFirstName-2" placeholder="Last Name" name="last_name"></div>
+                                                id="exampleFirstName-2" value='<?php echo $student['lastname']; ?>'
+                                                placeholder="Last Name" name="last_name"></div>
                                     </div>
                                     <div class="form-group"><input class="form-control form-control-user" type="text"
                                             id="exampleInputEmail-10" aria-describedby="emailHelp"
-                                            placeholder="Student Number" name="student_number"></div>
+                                            placeholder="Student Number" value='<?php echo $student['studentNum']; ?>'
+                                            name="student_number"></div>
                                     <div class="form-group"><input class="form-control form-control-user" type="email"
                                             id="exampleInputEmail" aria-describedby="emailHelp"
-                                            placeholder="Email Address" name="email"></div>
+                                            placeholder="Email Address" name="email"
+                                            value='<?php echo $student['email']; ?>'></div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user"
-                                                type="password" id="examplePasswordInput" placeholder="Password"
+                                                type="password" id="examplePasswordInput"
+                                                value='<?php echo $student['password']; ?>' placeholder="Password"
                                                 name="password"></div>
                                         <div class="col-sm-6"><input class="form-control form-control-user"
                                                 type="password" id="exampleRepeatPasswordInput"
-                                                placeholder="Repeat Password" name="password_repeat"></div>
+                                                placeholder="Repeat Password"
+                                                value='<?php echo $student['password']; ?>' name="password_repeat">
+                                        </div>
                                     </div>
                                     <h6 style="padding-left: 20px;"><strong>Condition</strong></h6>
                                     <div class="form-check" style="margin-right: 0;"><input class="form-check-input"
@@ -134,6 +160,28 @@ include 'includes/session.php';
                                             <option value="Eastern Cape">Eastern Cape</option>
                                             <option value="Northern Cape">Northern Cape</option>
                                         </select></div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <select id="interview" class="form-control"
+                                                    style="border-radius: 160px;"
+                                                    value='<?php echo $student['innterviewedStatus']; ?>'
+                                                    class="form-control" name="active">
+                                                    <option value="None" selected="">Select Interview Status</option>
+                                                    <option value="1">Interviewed</option>
+                                                    <option value="0">Not Interviewed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="form-group"><label for="first_name"><strong>Interview
+                                                        Date</strong><br></label><br><input class="form-control"
+                                                    type="date" style="border-radius: 160px;" name="InterviewDate"
+                                                    id="InterviewDate"></div>
+                                        </div>
+                                    </div>
                                     <div class="form-group"><input
                                             class="form-control form-control-sm form-control-user" type="text"
                                             id="exampleInputEmail-5" aria-describedby="emailHelp" placeholder="Town"
@@ -147,7 +195,7 @@ include 'includes/session.php';
                                                 <br>the faculty will not be held liable for my performance.<br></label>
                                         </div>
                                     </div><button class="btn btn-primary btn-block text-white btn-user"
-                                        type="submit">Register Student</button>
+                                        type="submit">Save Student Information</button>
                                     <hr>
                                 </form>
                                 <div class="text-center"></div>

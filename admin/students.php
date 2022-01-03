@@ -55,7 +55,8 @@ include 'includes/session.php';
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
                                                 <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
+                                            </select>&nbsp;</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input
@@ -73,7 +74,7 @@ include 'includes/session.php';
                                             <th>Email</th>
                                             <th>Contact No.</th>
                                             <th>Reason</th>
-                                            <th>Total Sessions Attendance</th>
+                                            <th>Tools</th>
 
                                         </tr>
                                     </thead>
@@ -93,7 +94,11 @@ include 'includes/session.php';
                                             <td>" . $row['email'] . "</td>
                                             <td>" . $row['contactNr'] . "</td>
                                             <td>" . $row['reason'] . "</td>
-                                            <td>10/33</td>
+                                            <td>
+                                                <a href='add-student.php?studentNum=" . $row['studentNum'] . "'><button class='btn btn-success btn-sm edit btn-flat'><i class='fa fa-edit' ></i> Edit</button></a>
+                                                <button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['studentNum'] . "'><i class='fa fa-trash'></i> Delete</button>
+                             
+                                             </td>
                                         </tr>
                                             ";
                                             }
