@@ -40,7 +40,7 @@ $pdo->close();
                         <div class="card-body p-0">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h4 class="text-dark mb-4" style="text-align: left;">Register a Student</h4>
+                                    <h4 class="text-dark mb-4" style="text-align: left;">Update Student Information</h4>
                                 </div>
                                 <form class="user">
                                     <?php
@@ -55,7 +55,8 @@ $pdo->close();
                                     ?>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user"
-                                                type="text" id="exampleFirstName-1" placeholder="First Name"
+                                                type="text" id="exampleFirstName-1"
+                                                value='<?php echo $student['firstname']; ?>' placeholder="First Name"
                                                 name="first_name"></div>
                                         <div class="col-sm-6"><input class="form-control form-control-user" type="text"
                                                 id="exampleFirstName-2" value='<?php echo $student['lastname']; ?>'
@@ -182,6 +183,16 @@ $pdo->close();
                                                     id="InterviewDate"></div>
                                         </div>
                                     </div>
+                                    <div class="form-group"><textarea class="form-control"
+                                            placeholder="Reason for Intervention (Reason for not performing well)"
+                                            style="margin-top: 15px;border-radius: 160px;padding-left: 20px;"
+                                            name="reason"></textarea><textarea class="form-control"
+                                            placeholder="Interview remarks"
+                                            style="margin-top: 15px;border-radius: 160px;padding-left: 20px;"
+                                            name="remarks"><?php $remarks = $student['interviewRemarks'];
+                                                                                                                                                                                                                                                                                                                                                                                                                echo htmlspecialchars($remarks);
+                                                                                                                                                                                                                                                                                                                                                                                                                ?></textarea>
+                                    </div>
                                     <div class="form-group"><input
                                             class="form-control form-control-sm form-control-user" type="text"
                                             id="exampleInputEmail-5" aria-describedby="emailHelp" placeholder="Town"
@@ -253,6 +264,9 @@ $pdo->close();
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script>
+        //$('#')
+    </script>
 </body>
 
 </html>

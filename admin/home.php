@@ -116,7 +116,7 @@ include 'includes/session.php';
                         <div class="col">
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h6 class="text-primary font-weight-bold m-0" style="border-color: #023e8a;">Your
+                                    <h6 class="text-primary font-weight-bold m-0" style="border-color: #023e8a;">Student
                                         Attendance</h6>
                                     <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle"
                                             aria-expanded="false" data-toggle="dropdown" type="button"><i

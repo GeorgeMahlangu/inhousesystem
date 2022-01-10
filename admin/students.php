@@ -118,7 +118,7 @@ include 'includes/session.php';
                                             <td><strong>Email</strong></td>
                                             <td><strong>Contact No.</strong></td>
                                             <td><strong>Reason</strong></td>
-                                            <td><strong>Total Sessions Attendance</strong></td>
+                                            <td><strong>Tools</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
